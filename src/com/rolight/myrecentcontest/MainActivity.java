@@ -1,16 +1,64 @@
 package com.rolight.myrecentcontest;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
+
+	private void showList(String rawdata) {
+		System.out.println("信息为：" + rawdata);
+		if (rawdata == null || rawdata.equals("Error!")) {
+			Toast.makeText(getApplicationContext(), "获取信息出错",
+					Toast.LENGTH_SHORT).show();
+			return;
+		}
+		DataAnalysiser das = new DataAnalysiser(rawdata);
+		ArrayList<HashMap<String, String>> listdata = das.getData();
+		SimpleAdapter simpleAdapter = new SimpleAdapter(this, listdata,
+				R.layout.simple_item, new String[] { "name", "link", "oj",
+						"week", "start_time" }, new int[] { R.id.contest_name,
+						R.id.link, R.id.oj, R.id.week, R.id.starttime });
+		ListView list = (ListView) findViewById(R.id.listView1);
+		list.setAdapter(simpleAdapter);
+	}
+
+	private void getData(ContestDataDownloader cdn) {
+		cdn.downloadData();
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		final Button button = (Button) findViewById(R.id.button1);
+		final ContestDataDownloader cdn = new ContestDataDownloader(
+				"http://contests.acmicpc.info/contests.json");
+		new Thread() {
+			public void run() {
+				getData(cdn);
+			}
+		}.start();
+		button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showList(cdn.data);
+			}
+		});
 	}
 
 	@Override
