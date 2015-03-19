@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,9 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.Service;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -41,6 +45,8 @@ public class MainActivity extends ActionBarActivity {
 		cdn.downloadData();
 	}
 
+	AlarmManager aManager;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,6 +59,12 @@ public class MainActivity extends ActionBarActivity {
 				getData(cdn);
 			}
 		}.start();
+
+		aManager = (AlarmManager) getSystemService(Service.ALARM_SERVICE);
+		Intent intent = new Intent(MainActivity.this, PushService.class);
+		final PendingIntent pi = PendingIntent.getService(MainActivity.this, 0,
+				intent, 0);
+		aManager.setRepeating(AlarmManager.RTC_WAKEUP, 0, 5000, pi);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
