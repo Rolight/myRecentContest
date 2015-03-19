@@ -34,6 +34,7 @@ public class DataAnalysiser {
 		return new GregorianCalendar(y, m, d, h, M, s);
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	private void Analysis() {
 		Data = new ArrayList<HashMap<String, String>>();
 		Stime = new ArrayList<GregorianCalendar>();
@@ -63,5 +64,9 @@ public class DataAnalysiser {
 
 	public ArrayList<HashMap<String, String>> getData() {
 		return Data;
+	}
+	
+	public ArrayList<GregorianCalendar> getTimeList() {
+		return Stime;
 	}
 }

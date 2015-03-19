@@ -8,21 +8,22 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.rolight.myrecentcontest.MainActivity" >
 
-    <ListView
-        android:id="@+id/listView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true" 
-        android:layout_marginBottom="53dp">
-
-    </ListView>
-
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="53dp"
         android:text="Download" />
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true" 
+        >
+
+    </ListView>
 
 </RelativeLayout>
