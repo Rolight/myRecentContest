@@ -26,9 +26,16 @@ public class PushService extends Service {
 	public IBinder onBind(Intent intent) {
 		return null;
 	}
+	
+	public int OnStartCommand(Intent intent, int flags, int startId) {
+		super.onStartCommand(intent, flags, startId);
+		System.out.println("服务已经启动");
+		return START_STICKY;
+	}
 
 	@Override
 	public void onCreate() {
+		System.out.println("推送服务已启动");
 		messageNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		// 开启线程
 		messageThread = new MessageThread();
@@ -36,7 +43,7 @@ public class PushService extends Service {
 		messageThread.start();
 		super.onCreate();
 	}
-
+	
 	@SuppressLint("NewApi")
 	public class MessageThread extends Thread {
 		public boolean isRunning = true;

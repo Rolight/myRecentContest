@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,6 +45,9 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//开启推送服务
+		//final Intent intent = new Intent();
+		//intent.setAction("com.rolight.myrecentcontest.MY_SERVICE");
 		setContentView(R.layout.activity_main);
 		final Button button = (Button) findViewById(R.id.button1);
 		final ContestDataDownloader cdn = new ContestDataDownloader(
@@ -56,6 +60,7 @@ public class MainActivity extends ActionBarActivity {
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				//startService(intent);
 				showList(cdn.data);
 			}
 		});
